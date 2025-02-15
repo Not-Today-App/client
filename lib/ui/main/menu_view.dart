@@ -1,27 +1,24 @@
-import 'package:client/utils/routes.dart';
+import 'package:client/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+class MenuView extends StatefulWidget {
+  const MenuView({super.key, required this.child});
+
+  final Widget child;
 
   @override
-  State<MenuPage> createState() => _MenuPageState();
+  State<MenuView> createState() => _MenuViewState();
 }
 
-class _MenuPageState extends State<MenuPage> {
+class _MenuViewState extends State<MenuView> {
   int _selectedIndex = 0;
 
-  final Map<String, WidgetBuilder> _pages = AppRoutes.getRoutes();
-
-  Widget _getCurrentPage() {
-    if (_selectedIndex == 0) {
-      return _pages[AppRoutes.addictionsPage]!(context);
-    } else if (_selectedIndex == 1) {
-      return _pages[AppRoutes.diariesPage]!(context);
-    } else {
-      return _pages[AppRoutes.profilePage]!(context);
-    }
-  }
+  final List<String> _routes = [
+    AppRoutes.addictionsView,
+    AppRoutes.diariesView,
+    AppRoutes.profileView,
+  ];
 
   String _getAppBarTitle() {
     switch (_selectedIndex) {
@@ -41,13 +38,15 @@ class _MenuPageState extends State<MenuPage> {
     setState(() {
       _selectedIndex = index;
     });
+
+    context.go(_routes[index]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_getAppBarTitle()), // Set the dynamic app bar title
+        title: Text(_getAppBarTitle()),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -62,10 +61,7 @@ class _MenuPageState extends State<MenuPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: _getCurrentPage(), // Display the selected page
-      ),
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

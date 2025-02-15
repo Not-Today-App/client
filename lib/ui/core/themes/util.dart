@@ -1,4 +1,4 @@
-import 'package:client/styles/sizes.dart';
+import 'package:client/ui/core/themes/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

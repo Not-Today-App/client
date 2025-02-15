@@ -1,4 +1,4 @@
-import "package:client/styles/util.dart";
+import "package:client/ui/core/themes/util.dart";
 import "package:flutter/material.dart";
 
 class MaterialTheme {

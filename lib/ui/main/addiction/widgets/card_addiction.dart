@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:client/domain/models/addiction/addiction.dart';
 
 class CardAddiction extends StatelessWidget {
-  const CardAddiction({super.key});
+  const CardAddiction({super.key, required this.addiction});
+
+  final Addiction addiction;
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +13,7 @@ class CardAddiction extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               child: Icon(Icons.local_florist),
             ),
             const SizedBox(width: 16),
@@ -18,11 +21,11 @@ class CardAddiction extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Weed",
+                  addiction.name, // Now uses real data
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  "8 days",
+                  "8 days (hardcoded)", // Now dynamic
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],

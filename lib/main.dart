@@ -1,10 +1,19 @@
-import 'package:client/utils/routes.dart';
+import 'package:client/config/dependencies.dart';
+import 'package:client/routing/router.dart';
 import 'package:flutter/material.dart';
-import 'styles/util.dart';
-import 'styles/theme.dart';
+import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
+import 'ui/core/themes/util.dart';
+import 'ui/core/themes/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  Logger.root.level = Level.ALL;
+  runApp(
+    MultiProvider(
+      providers: providersLocal,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,10 +26,10 @@ class MyApp extends StatelessWidget {
     TextTheme textTheme = createTextTheme(context, "Barlow", "Oswald");
     MaterialTheme theme = MaterialTheme(textTheme);
 
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-        initialRoute: AppRoutes.menuPage,
-        routes: AppRoutes.getRoutes());
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+      routerConfig: router,
+    );
   }
 }
