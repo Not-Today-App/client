@@ -50,13 +50,9 @@ class _MenuViewState extends State<MenuView> {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: IconButton(
-              onPressed: () {
-                // Add your action here
-              },
-              icon: const CircleAvatar(
-                child: Icon(Icons.add),
-              ),
+            child: IconButton.filledTonal(
+              onPressed: () {},
+              icon: Icon(Icons.add),
             ),
           ),
         ],

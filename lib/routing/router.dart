@@ -1,7 +1,8 @@
 import 'package:client/data/services/local/local_data_service.dart';
+import 'package:client/ui/auth/login/login_view.dart';
+import 'package:client/ui/auth/login/login_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:client/routing/routes.dart';
-import 'package:client/ui/auth/login/login_view.dart';
 import 'package:client/ui/main/addiction/addictions_view.dart';
 import 'package:client/ui/main/addiction/addictions_view_model.dart';
 import 'package:client/ui/main/diary/diaries_view.dart';
@@ -15,7 +16,11 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: AppRoutes.loginView,
-      builder: (context, state) => const LoginView(),
+      builder: (context, state) {
+        return LoginView(
+          viewModel: LoginViewModel(authRepository: context.read()),
+        );
+      },
     ),
     ShellRoute(
       builder: (context, state, child) {

@@ -6,11 +6,13 @@ import 'package:provider/provider.dart';
 import 'ui/core/themes/util.dart';
 import 'ui/core/themes/theme.dart';
 
+final allProviders = [...providersLocal, ...providersRemote];
+
 void main() {
   Logger.root.level = Level.ALL;
   runApp(
     MultiProvider(
-      providers: providersLocal,
+      providers: allProviders,
       child: const MyApp(),
     ),
   );
