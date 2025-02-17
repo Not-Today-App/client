@@ -1,0 +1,2 @@
+C:/Users/dioog/apps/client/android/app/.cxx/Debug/x5622361/x86/CMakeFiles/edit_cache.dir
+C:/Users/dioog/apps/client/android/app/.cxx/Debug/x5622361/x86/CMakeFiles/rebuild_cache.dir

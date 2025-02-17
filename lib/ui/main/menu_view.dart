@@ -1,4 +1,5 @@
 import 'package:client/routing/routes.dart';
+import 'package:client/ui/main/addiction/widgets/addiction_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

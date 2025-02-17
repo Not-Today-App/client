@@ -20,11 +20,14 @@ Addiction _$AddictionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Addiction {
-  /// The name of the addiction.
+// ignore: invalid_annotation_target
+  @JsonKey(name: '_id')
+  String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-
-  /// List of symptoms associated with the addiction.
+  String get quitReason => throw _privateConstructorUsedError;
   List<String> get symptoms => throw _privateConstructorUsedError;
+  List<String> get treatmentOptions => throw _privateConstructorUsedError;
+  List<String> get triggers => throw _privateConstructorUsedError;
 
   /// Serializes this Addiction to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +44,13 @@ abstract class $AddictionCopyWith<$Res> {
   factory $AddictionCopyWith(Addiction value, $Res Function(Addiction) then) =
       _$AddictionCopyWithImpl<$Res, Addiction>;
   @useResult
-  $Res call({String name, List<String> symptoms});
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String name,
+      String quitReason,
+      List<String> symptoms,
+      List<String> treatmentOptions,
+      List<String> triggers});
 }
 
 /// @nodoc
@@ -59,17 +68,37 @@ class _$AddictionCopyWithImpl<$Res, $Val extends Addiction>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = null,
+    Object? quitReason = null,
     Object? symptoms = null,
+    Object? treatmentOptions = null,
+    Object? triggers = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      quitReason: null == quitReason
+          ? _value.quitReason
+          : quitReason // ignore: cast_nullable_to_non_nullable
+              as String,
       symptoms: null == symptoms
           ? _value.symptoms
           : symptoms // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      treatmentOptions: null == treatmentOptions
+          ? _value.treatmentOptions
+          : treatmentOptions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      triggers: null == triggers
+          ? _value.triggers
+          : triggers // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ) as $Val);
   }
@@ -83,7 +112,13 @@ abstract class _$$AddictionImplCopyWith<$Res>
       __$$AddictionImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, List<String> symptoms});
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String name,
+      String quitReason,
+      List<String> symptoms,
+      List<String> treatmentOptions,
+      List<String> triggers});
 }
 
 /// @nodoc
@@ -99,17 +134,37 @@ class __$$AddictionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = null,
+    Object? quitReason = null,
     Object? symptoms = null,
+    Object? treatmentOptions = null,
+    Object? triggers = null,
   }) {
     return _then(_$AddictionImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      quitReason: null == quitReason
+          ? _value.quitReason
+          : quitReason // ignore: cast_nullable_to_non_nullable
+              as String,
       symptoms: null == symptoms
           ? _value._symptoms
           : symptoms // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      treatmentOptions: null == treatmentOptions
+          ? _value._treatmentOptions
+          : treatmentOptions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      triggers: null == triggers
+          ? _value._triggers
+          : triggers // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
@@ -119,30 +174,58 @@ class __$$AddictionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AddictionImpl implements _Addiction {
   const _$AddictionImpl(
-      {required this.name, required final List<String> symptoms})
-      : _symptoms = symptoms;
+      {@JsonKey(name: '_id') this.id,
+      required this.name,
+      required this.quitReason,
+      final List<String> symptoms = const [],
+      final List<String> treatmentOptions = const [],
+      final List<String> triggers = const []})
+      : _symptoms = symptoms,
+        _treatmentOptions = treatmentOptions,
+        _triggers = triggers;
 
   factory _$AddictionImpl.fromJson(Map<String, dynamic> json) =>
       _$$AddictionImplFromJson(json);
 
-  /// The name of the addiction.
+// ignore: invalid_annotation_target
+  @override
+  @JsonKey(name: '_id')
+  final String? id;
   @override
   final String name;
-
-  /// List of symptoms associated with the addiction.
-  final List<String> _symptoms;
-
-  /// List of symptoms associated with the addiction.
   @override
+  final String quitReason;
+  final List<String> _symptoms;
+  @override
+  @JsonKey()
   List<String> get symptoms {
     if (_symptoms is EqualUnmodifiableListView) return _symptoms;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_symptoms);
   }
 
+  final List<String> _treatmentOptions;
+  @override
+  @JsonKey()
+  List<String> get treatmentOptions {
+    if (_treatmentOptions is EqualUnmodifiableListView)
+      return _treatmentOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_treatmentOptions);
+  }
+
+  final List<String> _triggers;
+  @override
+  @JsonKey()
+  List<String> get triggers {
+    if (_triggers is EqualUnmodifiableListView) return _triggers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_triggers);
+  }
+
   @override
   String toString() {
-    return 'Addiction(name: $name, symptoms: $symptoms)';
+    return 'Addiction(id: $id, name: $name, quitReason: $quitReason, symptoms: $symptoms, treatmentOptions: $treatmentOptions, triggers: $triggers)';
   }
 
   @override
@@ -150,14 +233,26 @@ class _$AddictionImpl implements _Addiction {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddictionImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._symptoms, _symptoms));
+            (identical(other.quitReason, quitReason) ||
+                other.quitReason == quitReason) &&
+            const DeepCollectionEquality().equals(other._symptoms, _symptoms) &&
+            const DeepCollectionEquality()
+                .equals(other._treatmentOptions, _treatmentOptions) &&
+            const DeepCollectionEquality().equals(other._triggers, _triggers));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, name, const DeepCollectionEquality().hash(_symptoms));
+      runtimeType,
+      id,
+      name,
+      quitReason,
+      const DeepCollectionEquality().hash(_symptoms),
+      const DeepCollectionEquality().hash(_treatmentOptions),
+      const DeepCollectionEquality().hash(_triggers));
 
   /// Create a copy of Addiction
   /// with the given fields replaced by the non-null parameter values.
@@ -177,19 +272,30 @@ class _$AddictionImpl implements _Addiction {
 
 abstract class _Addiction implements Addiction {
   const factory _Addiction(
-      {required final String name,
-      required final List<String> symptoms}) = _$AddictionImpl;
+      {@JsonKey(name: '_id') final String? id,
+      required final String name,
+      required final String quitReason,
+      final List<String> symptoms,
+      final List<String> treatmentOptions,
+      final List<String> triggers}) = _$AddictionImpl;
 
   factory _Addiction.fromJson(Map<String, dynamic> json) =
       _$AddictionImpl.fromJson;
 
-  /// The name of the addiction.
+// ignore: invalid_annotation_target
+  @override
+  @JsonKey(name: '_id')
+  String? get id;
   @override
   String get name;
-
-  /// List of symptoms associated with the addiction.
+  @override
+  String get quitReason;
   @override
   List<String> get symptoms;
+  @override
+  List<String> get treatmentOptions;
+  @override
+  List<String> get triggers;
 
   /// Create a copy of Addiction
   /// with the given fields replaced by the non-null parameter values.

@@ -6,11 +6,13 @@ part 'addiction.g.dart';
 @freezed
 class Addiction with _$Addiction {
   const factory Addiction({
-    /// The name of the addiction.
+    // ignore: invalid_annotation_target
+    @JsonKey(name: '_id') String? id,
     required String name,
-
-    /// List of symptoms associated with the addiction.
-    required List<String> symptoms,
+    required String quitReason,
+    @Default([]) List<String> symptoms,
+    @Default([]) List<String> treatmentOptions,
+    @Default([]) List<String> triggers,
   }) = _Addiction;
 
   factory Addiction.fromJson(Map<String, Object?> json) =>

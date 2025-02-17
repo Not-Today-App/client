@@ -1,4 +1,4 @@
-import 'package:client/data/services/local/local_data_service.dart';
+import 'package:client/data/repositories/addiction/addiction_repository.dart';
 import 'package:client/ui/auth/login/login_view.dart';
 import 'package:client/ui/auth/login/login_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -33,9 +33,7 @@ final GoRouter router = GoRouter(
           path: AppRoutes.addictionsView,
           builder: (context, state) {
             final viewModel = AddictionsViewModel(
-              localDataService: LocalDataService(),
-              addictionRepository: context.read(),
-              userRepository: context.read(),
+              addictionRepository: context.read<AddictionRepository>(),
             );
             return AddictionsView(viewModel: viewModel);
           },
