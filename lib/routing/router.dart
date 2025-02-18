@@ -1,6 +1,6 @@
 import 'package:client/data/repositories/addiction/addiction_repository.dart';
 import 'package:client/data/repositories/auth/auth_repository.dart';
-import 'package:client/domain/models/addiction/addiction.dart';
+import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/ui/auth/login/login_view.dart';
 import 'package:client/ui/auth/login/login_view_model.dart';
 import 'package:client/ui/main/addiction_single/addiction_view.dart';
@@ -49,7 +49,7 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
                   path: AppRoutes
                       .addictionView, // Relative path to AddictionsView
                   builder: (context, state) {
-                    final addiction = state.extra as Addiction;
+                    final addiction = state.extra as UserAddiction;
                     return AddictionView(addiction: addiction);
                   },
                 ),

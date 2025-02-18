@@ -1,17 +1,17 @@
+import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/ui/core/themes/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:client/domain/models/addiction/addiction.dart';
 
 class AddictionView extends StatelessWidget {
   const AddictionView({super.key, required this.addiction});
 
-  final Addiction addiction;
+  final UserAddiction addiction;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(addiction.name),
+        title: Text(addiction.addiction),
         actions: [
           IconButton(
             onPressed: () {
@@ -37,7 +37,7 @@ class AddictionView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              addiction.name,
+              addiction.addiction,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: AppSizes.p16),
