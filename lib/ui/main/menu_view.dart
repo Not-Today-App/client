@@ -1,5 +1,4 @@
 import 'package:client/routing/routes.dart';
-import 'package:client/ui/main/addiction/widgets/addiction_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,19 +20,6 @@ class _MenuViewState extends State<MenuView> {
     AppRoutes.profileView,
   ];
 
-  String _getAppBarTitle() {
-    switch (_selectedIndex) {
-      case 0:
-        return "Addictions";
-      case 1:
-        return "Diaries";
-      case 2:
-        return "";
-      default:
-        return "";
-    }
-  }
-
   // Called when a bottom navigation bar item is tapped
   void _onItemTapped(int index) {
     setState(() {
@@ -46,18 +32,6 @@ class _MenuViewState extends State<MenuView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_getAppBarTitle()),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: IconButton.filledTonal(
-              onPressed: () {},
-              icon: Icon(Icons.add),
-            ),
-          ),
-        ],
-      ),
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

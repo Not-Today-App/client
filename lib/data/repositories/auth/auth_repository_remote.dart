@@ -1,3 +1,4 @@
+import 'package:client/data/services/api/api_client.dart';
 import 'package:client/data/services/api/model/login_request/login_request.dart';
 import 'package:client/data/services/api/model/login_response/login_response.dart';
 import 'package:client/data/services/shared_preferences_service.dart';
@@ -8,12 +9,18 @@ import 'auth_repository.dart';
 
 class AuthRepositoryRemote extends AuthRepository {
   AuthRepositoryRemote({
+    required ApiClient apiClient,
     required AuthApiClient authApiClient,
     required SharedPreferencesService sharedPreferencesService,
-  })  : _authApiClient = authApiClient,
-        _sharedPreferencesService = sharedPreferencesService;
+  })  : _apiClient = apiClient,
+        _authApiClient = authApiClient,
+        _sharedPreferencesService =
+            sharedPreferencesService; /* {
+    _apiClient.authHeaderProvider = _authHeaderProvider;
+  } */
 
   final AuthApiClient _authApiClient;
+  final ApiClient _apiClient;
   final SharedPreferencesService _sharedPreferencesService;
 
   bool? _isAuthenticated;
@@ -58,8 +65,7 @@ class AuthRepositoryRemote extends AuthRepository {
         // Check if it's a success
         _log.info('User logged in');
         _isAuthenticated = true;
-        _authToken =
-            result.value.accessToken; // Access the value from Ok<LoginResponse>
+        _authToken = result.value.accessToken;
         return await _sharedPreferencesService
             .saveToken(result.value.accessToken);
       } else if (result is Error<LoginResponse>) {
@@ -96,4 +102,7 @@ class AuthRepositoryRemote extends AuthRepository {
       notifyListeners();
     }
   }
+
+/*   String? _authHeaderProvider() =>
+      _authToken != null ? 'Bearer $_authToken' : null; */
 }

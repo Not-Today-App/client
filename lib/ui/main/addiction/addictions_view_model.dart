@@ -1,3 +1,4 @@
+import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/utils/command.dart';
 import 'package:client/utils/results.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ class AddictionsViewModel extends ChangeNotifier {
   List<Addiction> _addictions = [];
   List<Addiction> get addictions => _addictions;
 
+  List<UserAddiction> _userAddictions = [];
+  List<UserAddiction> get userAddictions => _userAddictions;
+
   late Command0 load;
 
   Future<Result<void>> _load() async {
@@ -31,6 +35,19 @@ class AddictionsViewModel extends ChangeNotifier {
       case Error<List<Addiction>>():
         _log.warning('Failed to load addictions. Error: ${result.error}');
     }
-    return result;
+    final userResult = await _addictionRepository.getUserAddictions();
+    switch (userResult) {
+      case Ok<List<UserAddiction>>():
+        _log.fine('Loaded user addictions');
+        _userAddictions = userResult.value;
+        break;
+      case Error<List<UserAddiction>>():
+        _log.warning(
+            'Failed to load user addictions. Error: ${userResult.error}');
+    }
+
+    // Notify listeners after both loads are completed
+    notifyListeners();
+    return Result.ok(null);
   }
 }

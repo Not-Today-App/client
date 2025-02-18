@@ -16,7 +16,7 @@ class AddictionsView extends StatelessWidget {
         title: const Text('Addictions'),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: AppSizes.p16),
             child: IconButton.filledTonal(
               onPressed: () => _openAddictionBottomSheet(context),
               icon: Icon(Icons.add),
@@ -49,10 +49,10 @@ class AddictionsView extends StatelessWidget {
             // SUCCESS
             return ListView.separated(
               shrinkWrap: true,
-              itemCount: viewModel.addictions.length,
+              itemCount: viewModel.userAddictions.length,
               itemBuilder: (_, index) {
                 return CardAddiction(
-                  addiction: viewModel.addictions[index],
+                  addiction: viewModel.userAddictions[index],
                 );
               },
               separatorBuilder: (context, index) => SizedBox(

@@ -1,6 +1,11 @@
 import 'package:client/data/repositories/addiction/addiction_repository.dart';
+import 'package:client/data/repositories/auth/auth_repository.dart';
+import 'package:client/domain/models/addiction/addiction.dart';
 import 'package:client/ui/auth/login/login_view.dart';
 import 'package:client/ui/auth/login/login_view_model.dart';
+import 'package:client/ui/main/addiction_single/addiction_view.dart';
+import 'package:client/ui/main/profile/profile_view_model.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:client/routing/routes.dart';
 import 'package:client/ui/main/addiction/addictions_view.dart';
@@ -10,45 +15,79 @@ import 'package:client/ui/main/menu_view.dart';
 import 'package:client/ui/main/profile/profile_view.dart';
 import 'package:provider/provider.dart';
 
-final GoRouter router = GoRouter(
-  initialLocation: AppRoutes.loginView,
-  debugLogDiagnostics: true,
-  routes: [
-    GoRoute(
-      path: AppRoutes.loginView,
-      builder: (context, state) {
-        return LoginView(
-          viewModel: LoginViewModel(authRepository: context.read()),
-        );
-      },
-    ),
-    ShellRoute(
-      builder: (context, state, child) {
-        return MenuView(child: child);
-      },
-      // Routes inside Shell
+GoRouter router(AuthRepository authRepository) => GoRouter(
+      initialLocation: AppRoutes.loginView,
+      debugLogDiagnostics: true,
+      redirect: _redirect,
+      refreshListenable: authRepository,
       routes: [
-        // AddictionsView
         GoRoute(
-          path: AppRoutes.addictionsView,
+          path: AppRoutes.loginView,
           builder: (context, state) {
-            final viewModel = AddictionsViewModel(
-              addictionRepository: context.read<AddictionRepository>(),
+            return LoginView(
+              viewModel: LoginViewModel(authRepository: context.read()),
             );
-            return AddictionsView(viewModel: viewModel);
           },
         ),
-        // DiariesView
-        GoRoute(
-          path: AppRoutes.diariesView,
-          builder: (context, state) => const DiariesView(),
-        ),
-        // ProfileView
-        GoRoute(
-          path: AppRoutes.profileView,
-          builder: (context, state) => const ProfileView(),
+        ShellRoute(
+          builder: (context, state, child) {
+            return MenuView(child: child);
+          },
+          // Routes inside Shell
+          routes: [
+            // AddictionsView
+            GoRoute(
+              path: AppRoutes.addictionsView,
+              builder: (context, state) {
+                final viewModel = AddictionsViewModel(
+                  addictionRepository: context.read<AddictionRepository>(),
+                );
+                return AddictionsView(viewModel: viewModel);
+              },
+              routes: [
+                GoRoute(
+                  path: AppRoutes
+                      .addictionView, // Relative path to AddictionsView
+                  builder: (context, state) {
+                    final addiction = state.extra as Addiction;
+                    return AddictionView(addiction: addiction);
+                  },
+                ),
+              ],
+            ),
+            // DiariesView
+            GoRoute(
+              path: AppRoutes.diariesView,
+              builder: (context, state) => const DiariesView(),
+            ),
+            // ProfileView
+            GoRoute(
+                path: AppRoutes.profileView,
+                builder: (context, state) {
+                  return ProfileView(
+                      viewModel:
+                          ProfileViewModel(authRepository: context.read()));
+                }),
+          ],
         ),
       ],
-    ),
-  ],
-);
+    );
+
+// From https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/redirection.dart
+Future<String?> _redirect(BuildContext context, GoRouterState state) async {
+  // if the user is not logged in, they need to login
+  final loggedIn = await context.read<AuthRepository>().isAuthenticated;
+  final loggingIn = state.matchedLocation == AppRoutes.loginView;
+  if (!loggedIn) {
+    return AppRoutes.loginView;
+  }
+
+  // if the user is logged in but still on the login page, send them to
+  // the home page
+  if (loggingIn) {
+    return AppRoutes.addictionsView;
+  }
+
+  // no need to redirect at all
+  return null;
+}

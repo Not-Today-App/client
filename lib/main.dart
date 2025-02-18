@@ -1,19 +1,24 @@
 import 'package:client/config/dependencies.dart';
+import 'package:client/data/services/api/api_client.dart';
 import 'package:client/routing/router.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'ui/core/themes/util.dart';
 import 'ui/core/themes/theme.dart';
 
-final allProviders = [...providersLocal, ...providersRemote];
-
-void main() {
+void main() async {
+  final apiClient = ApiClient();
+  final client = ValueNotifier<GraphQLClient>(apiClient.client);
   Logger.root.level = Level.ALL;
   runApp(
     MultiProvider(
-      providers: allProviders,
-      child: const MyApp(),
+      providers: providersRemote,
+      child: GraphQLProvider(
+        client: client,
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -31,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      routerConfig: router,
+      routerConfig: router(context.read()),
     );
   }
 }
