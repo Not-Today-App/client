@@ -33,20 +33,20 @@ class _MenuViewState extends State<MenuView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.health_and_safety), // Icon for Addictions
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.psychology_outlined),
             label: 'Addictions',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book), // Icon for Diaries
+          NavigationDestination(
+            icon: Icon(Icons.book_outlined),
             label: 'Diaries',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person), // Icon for Profile
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
             label: 'Profile',
           ),
         ],

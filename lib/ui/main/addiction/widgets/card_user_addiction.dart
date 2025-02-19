@@ -3,18 +3,16 @@ import 'package:client/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class CardAddiction extends StatelessWidget {
-  const CardAddiction({super.key, required this.addiction});
+class CardUserAddiction extends StatelessWidget {
+  const CardUserAddiction({super.key, required this.userAddiction});
 
-  final UserAddiction addiction;
+  final UserAddiction userAddiction;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        context.go('${AppRoutes.addictionsView}/${AppRoutes.addictionView}',
-            extra: addiction);
-      },
+      onTap: () =>
+          context.push(AppRoutes.addictionWithName(userAddiction.addiction)),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -28,7 +26,7 @@ class CardAddiction extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    addiction.addiction, // Now uses real data
+                    userAddiction.addiction, // Now uses real data
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(

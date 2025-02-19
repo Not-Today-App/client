@@ -1,7 +1,7 @@
 import 'package:client/ui/core/themes/sizes.dart';
 import 'package:client/ui/main/addiction/addictions_view_model.dart';
 import 'package:client/ui/main/addiction/widgets/addiction_bottom_sheet.dart';
-import 'package:client/ui/main/addiction/widgets/card_addiction.dart';
+import 'package:client/ui/main/addiction/widgets/card_user_addiction.dart';
 import 'package:flutter/material.dart';
 
 class AddictionsView extends StatelessWidget {
@@ -47,12 +47,17 @@ class AddictionsView extends StatelessWidget {
               );
             }
             // SUCCESS
+            if (viewModel.userAddictions.isEmpty) {
+              return const Center(
+                child: Text('No addictions yet'),
+              );
+            }
             return ListView.separated(
               shrinkWrap: true,
               itemCount: viewModel.userAddictions.length,
               itemBuilder: (_, index) {
-                return CardAddiction(
-                  addiction: viewModel.userAddictions[index],
+                return CardUserAddiction(
+                  userAddiction: viewModel.userAddictions[index],
                 );
               },
               separatorBuilder: (context, index) => SizedBox(

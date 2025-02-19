@@ -1,9 +1,9 @@
 import 'package:client/data/repositories/addiction/addiction_repository.dart';
 import 'package:client/data/repositories/auth/auth_repository.dart';
-import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/ui/auth/login/login_view.dart';
 import 'package:client/ui/auth/login/login_view_model.dart';
 import 'package:client/ui/main/addiction_single/addiction_view.dart';
+import 'package:client/ui/main/addiction_single/addiction_view_model.dart';
 import 'package:client/ui/main/profile/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -46,11 +46,18 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
               },
               routes: [
                 GoRoute(
-                  path: AppRoutes
-                      .addictionView, // Relative path to AddictionsView
+                  path: AppRoutes.addictionViewRelative,
                   builder: (context, state) {
-                    final addiction = state.extra as UserAddiction;
-                    return AddictionView(addiction: addiction);
+                    final name =
+                        Uri.decodeComponent(state.pathParameters['name']!);
+                    final viewModel = AddictionViewModel(
+                      addictionRepository: context.read<AddictionRepository>(),
+                    );
+
+                    // Execute the load command when creating the view
+                    viewModel.loadAddiction.execute(name);
+
+                    return AddictionView(viewModel: viewModel);
                   },
                 ),
               ],

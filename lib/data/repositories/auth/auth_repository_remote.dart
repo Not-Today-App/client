@@ -14,10 +14,9 @@ class AuthRepositoryRemote extends AuthRepository {
     required SharedPreferencesService sharedPreferencesService,
   })  : _apiClient = apiClient,
         _authApiClient = authApiClient,
-        _sharedPreferencesService =
-            sharedPreferencesService; /* {
+        _sharedPreferencesService = sharedPreferencesService {
     _apiClient.authHeaderProvider = _authHeaderProvider;
-  } */
+  }
 
   final AuthApiClient _authApiClient;
   final ApiClient _apiClient;
@@ -103,6 +102,6 @@ class AuthRepositoryRemote extends AuthRepository {
     }
   }
 
-/*   String? _authHeaderProvider() =>
-      _authToken != null ? 'Bearer $_authToken' : null; */
+  String? _authHeaderProvider() =>
+      _authToken != null ? 'Bearer $_authToken' : '';
 }

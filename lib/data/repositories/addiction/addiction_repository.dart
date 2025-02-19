@@ -4,10 +4,11 @@ import 'package:client/utils/results.dart';
 
 /// Data source for addiction related data
 abstract class AddictionRepository {
-  /// Get all addictions
   Future<Result<List<Addiction>>> getAddictions();
-  //// Get addictions from logged user()
+
   Future<Result<List<UserAddiction>>> getUserAddictions();
 
-  ///
+  Future<Result<Addiction>> getAddictionByName(String name);
+
+  Future<Result<UserAddiction>> getUserAddictionByName(String name);
 }

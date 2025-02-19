@@ -9,15 +9,18 @@ import 'ui/core/themes/util.dart';
 import 'ui/core/themes/theme.dart';
 
 void main() async {
-  final apiClient = ApiClient();
-  final client = ValueNotifier<GraphQLClient>(apiClient.client);
   Logger.root.level = Level.ALL;
   runApp(
     MultiProvider(
       providers: providersRemote,
-      child: GraphQLProvider(
-        client: client,
-        child: const MyApp(),
+      child: Builder(
+        builder: (context) {
+          final apiClient = context.read<ApiClient>();
+          return GraphQLProvider(
+            client: ValueNotifier(apiClient.client),
+            child: const MyApp(),
+          );
+        },
       ),
     ),
   );
