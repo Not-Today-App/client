@@ -8,7 +8,10 @@ abstract final class AppRoutes {
 
   // Relative paths
   static const addictionViewRelative = ':name';
+  static const profileSettingsViewRelative = 'settings';
 
   // Helper methods for constructing paths
   static String addictionWithName(String name) => '$addictionsView/$name';
+  static String profileSettings() =>
+      '$profileView/$profileSettingsViewRelative';
 }

@@ -1,4 +1,5 @@
 import 'package:client/utils/results.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,4 +34,19 @@ class SharedPreferencesService {
       return Result.error(e);
     }
   }
+
+  static const _themeModeKey = 'THEME_MODE';
+
+  Future<void> saveThemeMode(ThemeMode themeMode) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setInt(_themeModeKey, themeMode.index);
+  }
+
+  Future<ThemeMode> fetchThemeMode() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final index = sharedPreferences.getInt(_themeModeKey);
+    return ThemeMode.values[index ?? ThemeMode.light.index];
+  }
+
+  /* static const _languageKey = 'LANGUAGE'; */
 }

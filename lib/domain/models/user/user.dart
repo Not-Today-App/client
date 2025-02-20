@@ -6,11 +6,12 @@ part 'user.g.dart';
 @freezed
 class User with _$User {
   const factory User({
-    /// The user's name.
-    required String name,
-
-    /// The user's picture URL.
-    required String picture,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: '_id') required String id,
+    required String username,
+    required String email,
+    String? picture,
+    required DateTime createdAt,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
