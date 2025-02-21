@@ -1,7 +1,7 @@
 import 'package:client/data/services/api/api_url.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:client/utils/results.dart';
-// import 'package:logging/logging.dart';
+import 'package:logging/logging.dart';
 
 typedef AuthHeaderProvider = String? Function();
 
@@ -33,7 +33,8 @@ class ApiClient {
 
   GraphQLClient get client => _client;
 
-  // final _log = Logger('AddictionsViewModel');
+  final _log = Logger('API Client');
+
   /// Executes a GraphQL query and returns the result.
   Future<Result<Map<String, dynamic>>> query(String query,
       {Map<String, dynamic>? variables}) async {
@@ -45,8 +46,8 @@ class ApiClient {
 
       final QueryResult result = await _client.query(options);
 
-/*       _log.info('API Response: ${result.data}');
-      _log.info('API Errors: ${result.exception}'); */
+      _log.info('API Response: ${result.data}');
+      _log.info('API Errors: ${result.exception}');
 
       if (result.hasException) {
         return Result.error(Exception(result.exception.toString()));

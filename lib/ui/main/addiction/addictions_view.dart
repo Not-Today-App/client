@@ -1,8 +1,10 @@
+import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/ui/core/themes/sizes.dart';
 import 'package:client/ui/main/addiction/addictions_view_model.dart';
 import 'package:client/ui/main/addiction/widgets/addiction_bottom_sheet.dart';
 import 'package:client/ui/main/addiction/widgets/card_user_addiction.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AddictionsView extends StatelessWidget {
   const AddictionsView({super.key, required this.viewModel});
@@ -11,6 +13,11 @@ class AddictionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserAddiction skelData = UserAddiction(
+      userId: 'defaultUserId',
+      id: 'defaultId',
+      addiction: 'Fake Addiction',
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Addictions'),
@@ -33,10 +40,6 @@ class AddictionsView extends StatelessWidget {
         child: ListenableBuilder(
           listenable: viewModel,
           builder: (context, _) {
-            // RUNNING
-            if (viewModel.load.running) {
-              return const Center(child: CircularProgressIndicator());
-            }
             // ERROR
             if (viewModel.load.error) {
               return Center(
@@ -47,21 +50,28 @@ class AddictionsView extends StatelessWidget {
               );
             }
             // SUCCESS
-            if (viewModel.userAddictions.isEmpty) {
+            if (viewModel.userAddictions.isEmpty && !viewModel.load.running) {
               return const Center(
-                child: Text('No addictions yet'),
+                child: Text('No addictions yet. Add one!'),
               );
             }
-            return ListView.separated(
-              shrinkWrap: true,
-              itemCount: viewModel.userAddictions.length,
-              itemBuilder: (_, index) {
-                return CardUserAddiction(
-                  userAddiction: viewModel.userAddictions[index],
-                );
-              },
-              separatorBuilder: (context, index) => SizedBox(
-                height: AppSizes.p16,
+            return Skeletonizer(
+              enabled: viewModel.load.running,
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: viewModel.load.running
+                    ? 2
+                    : viewModel.userAddictions.length,
+                itemBuilder: (_, index) {
+                  return CardUserAddiction(
+                    userAddiction: viewModel.load.running
+                        ? skelData
+                        : viewModel.userAddictions[index],
+                  );
+                },
+                separatorBuilder: (context, index) => SizedBox(
+                  height: AppSizes.p16,
+                ),
               ),
             );
           },

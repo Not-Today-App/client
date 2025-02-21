@@ -26,28 +26,36 @@ class AddictionsViewModel extends ChangeNotifier {
   late Command0 load;
 
   Future<Result<void>> _load() async {
-    final result = await _addictionRepository.getAddictions();
-    switch (result) {
+    final addictionResult = await _addictionRepository.getAddictions();
+    final userAddictionResult = await _addictionRepository.getUserAddictions();
+
+    bool success = true;
+
+    switch (addictionResult) {
       case Ok<List<Addiction>>():
         _log.fine('Loaded addictions');
-        _addictions = result.value;
-        notifyListeners();
+        _addictions = addictionResult.value;
       case Error<List<Addiction>>():
-        _log.warning('Failed to load addictions. Error: ${result.error}');
-    }
-    final userResult = await _addictionRepository.getUserAddictions();
-    switch (userResult) {
-      case Ok<List<UserAddiction>>():
-        _log.fine('Loaded user addictions');
-        _userAddictions = userResult.value;
-        break;
-      case Error<List<UserAddiction>>():
         _log.warning(
-            'Failed to load user addictions. Error: ${userResult.error}');
+            'Failed to load addictions. Error: ${addictionResult.error}');
+        success = false;
     }
 
-    // Notify listeners after both loads are completed
+    switch (userAddictionResult) {
+      case Ok<List<UserAddiction>>():
+        _log.fine('Loaded user addictions');
+        _userAddictions = userAddictionResult.value;
+      case Error<List<UserAddiction>>():
+        _log.warning(
+            'Failed to load user addictions. Error: ${userAddictionResult.error}');
+        success = false;
+    }
+
     notifyListeners();
-    return Result.ok(null);
+
+    return success
+        ? Result.ok(null)
+        : Result.error(
+            Exception('Failed to load user addictions or addictions'));
   }
 }

@@ -7,6 +7,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'ui/core/themes/util.dart';
 import 'ui/core/themes/theme.dart';
 
@@ -41,7 +42,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: router(context.read()),
-      theme: theme.light(),
+      theme: theme.light().copyWith(
+        extensions: [
+          SkeletonizerConfigData(
+            effect: ShimmerEffect(
+              baseColor: const Color(0xFFF2E0D2),
+              highlightColor: const Color(0xFFFFF2D2),
+            ),
+          ),
+        ],
+      ),
       darkTheme: theme.dark(),
       themeMode: context.watch<ThemeController>().themeMode,
     );

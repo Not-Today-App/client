@@ -2,6 +2,8 @@ import 'package:client/data/repositories/addiction/addiction_repository.dart';
 import 'package:client/data/repositories/addiction/addiction_repository_remote.dart';
 import 'package:client/data/repositories/auth/auth_repository.dart';
 import 'package:client/data/repositories/auth/auth_repository_remote.dart';
+import 'package:client/data/repositories/diary/diary_repository.dart';
+import 'package:client/data/repositories/diary/diary_repository_remote.dart';
 import 'package:client/data/repositories/user/user_repository.dart';
 import 'package:client/data/repositories/user/user_repository_remote.dart';
 import 'package:client/data/services/api/api_client.dart';
@@ -35,6 +37,11 @@ List<SingleChildWidget> get providersRemote {
     Provider<UserRepository>(
       create: (context) => UserRepositoryRemote(
         apiClient: context.read(),
+      ),
+    ),
+    Provider<DiaryRepository>(
+      create: (context) => DiaryRepositoryRemote(
+        apiClient: context.read<ApiClient>(),
       ),
     ),
     Provider<AddictionRepository>(

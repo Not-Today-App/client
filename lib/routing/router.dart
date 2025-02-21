@@ -5,6 +5,7 @@ import 'package:client/ui/auth/login/login_view.dart';
 import 'package:client/ui/auth/login/login_view_model.dart';
 import 'package:client/ui/main/addiction_single/addiction_view.dart';
 import 'package:client/ui/main/addiction_single/addiction_view_model.dart';
+import 'package:client/ui/main/diary/diaries_view_model.dart';
 import 'package:client/ui/main/profile/profile_view_model.dart';
 import 'package:client/ui/main/profile_settings/profile_settings_view.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,11 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
             // DiariesView
             GoRoute(
               path: AppRoutes.diariesView,
-              builder: (context, state) => const DiariesView(),
+              builder: (context, state) {
+                final viewModel =
+                    DiariesViewModel(diaryRepository: context.read());
+                return DiariesView(viewModel: viewModel);
+              },
             ),
             // ProfileView
             GoRoute(

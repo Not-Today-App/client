@@ -6,6 +6,7 @@ import 'package:client/ui/main/profile/widgets/avatar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:client/routing/routes.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key, required this.viewModel});
@@ -18,6 +19,11 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, String> skelData = {
+      'username': 'Fake Username',
+      'joinedDate': 'Joined on Placeholder Date',
+      'imageUrl': '',
+    };
     int badgeSize = 46;
     return Scaffold(
       appBar: AppBar(
@@ -39,49 +45,45 @@ class ProfileView extends StatelessWidget {
       body: ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
-          if (viewModel.loadUser.running) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CircularProgressIndicator(),
-                  ElevatedButton(
-                    onPressed: () => viewModel.logout.execute(),
-                    child: const Text("Logout"),
-                  ),
-                ],
-              ),
-            );
-          }
-
           if (viewModel.loadUser.error) {
             return const Center(child: Text('Failed to load profile'));
           }
 
           return Center(
-            child: Column(
-              children: [
-                Avatar(
-                  imageUrl: viewModel.user.picture,
-                  onEdit: () {},
-                ),
-                const SizedBox(height: AppSizes.p16),
-                Text(
-                  viewModel.user.username,
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
-                const SizedBox(height: AppSizes.p12),
-                Text(
-                  'joined on ${_formatDate(viewModel.user.createdAt)}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                Spacer(),
-                ElevatedButton(
-                  onPressed: () => viewModel.logout.execute(),
-                  child: Text("Logout"),
-                ),
-                const SizedBox(height: AppSizes.p32),
-              ],
+            child: Skeletonizer(
+              enabled: viewModel.loadUser.running,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Avatar(
+                    imageUrl: viewModel.loadUser.running
+                        ? skelData['imageUrl']!
+                        : viewModel.user.picture,
+                    onEdit: () {},
+                    showIcon: !viewModel.loadUser.running,
+                  ),
+                  const SizedBox(height: AppSizes.p16),
+                  Text(
+                    viewModel.loadUser.running
+                        ? skelData['username']!
+                        : viewModel.user.username,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  const SizedBox(height: AppSizes.p12),
+                  Text(
+                    viewModel.loadUser.running
+                        ? skelData['joinedDate']!
+                        : 'Joined on ${_formatDate(viewModel.user.createdAt)}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const Spacer(),
+                  ElevatedButton(
+                    onPressed: () => viewModel.logout.execute(),
+                    child: const Text("Logout"),
+                  ),
+                  const SizedBox(height: AppSizes.p32),
+                ],
+              ),
             ),
           );
         },

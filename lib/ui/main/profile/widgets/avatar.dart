@@ -7,11 +7,13 @@ class Avatar extends StatelessWidget {
     this.imageUrl,
     this.onEdit,
     this.radius = 60,
+    this.showIcon = true,
   });
 
   final String? imageUrl;
   final VoidCallback? onEdit;
   final double radius;
+  final bool showIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class Avatar extends StatelessWidget {
           radius: radius,
           backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
           foregroundImage: imageUrl != null ? NetworkImage(imageUrl!) : null,
-          child: const Icon(Icons.person),
+          child: showIcon ? const Icon(Icons.person) : null,
         ),
         if (onEdit != null)
           Positioned(
