@@ -58,7 +58,7 @@ query Diaries {
 }
 ''';
 
-class DiaryRepositoryRemote implements DiaryRepository {
+class DiaryRepositoryRemote extends DiaryRepository {
   DiaryRepositoryRemote({required ApiClient apiClient})
       : _apiClient = apiClient;
 

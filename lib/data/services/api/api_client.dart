@@ -50,7 +50,7 @@ class ApiClient {
       _log.info('API Errors: ${result.exception}');
 
       if (result.hasException) {
-        return Result.error(Exception(result.exception.toString()));
+        return Result.error(result.exception!);
       }
 
       if (result.data == null) {
@@ -75,7 +75,7 @@ class ApiClient {
       final QueryResult result = await _client.mutate(options);
 
       if (result.hasException) {
-        return Result.error(Exception(result.exception.toString()));
+        return Result.error(result.exception!);
       }
 
       if (result.data == null) {

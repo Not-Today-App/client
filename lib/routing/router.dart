@@ -71,6 +71,7 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
               builder: (context, state) {
                 final viewModel =
                     DiariesViewModel(diaryRepository: context.read());
+
                 return DiariesView(viewModel: viewModel);
               },
             ),

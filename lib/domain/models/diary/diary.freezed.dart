@@ -22,11 +22,11 @@ Diary _$DiaryFromJson(Map<String, dynamic> json) {
 mixin _$Diary {
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get mood => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this Diary to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,11 +44,11 @@ abstract class $DiaryCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: '_id') String? id,
-      String userId,
+      String? userId,
       String title,
       String content,
       String mood,
-      DateTime createdAt});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -67,21 +67,21 @@ class _$DiaryCopyWithImpl<$Res, $Val extends Diary>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = null,
+    Object? userId = freezed,
     Object? title = null,
     Object? content = null,
     Object? mood = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -94,10 +94,10 @@ class _$DiaryCopyWithImpl<$Res, $Val extends Diary>
           ? _value.mood
           : mood // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -111,11 +111,11 @@ abstract class _$$DiaryImplCopyWith<$Res> implements $DiaryCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: '_id') String? id,
-      String userId,
+      String? userId,
       String title,
       String content,
       String mood,
-      DateTime createdAt});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -132,21 +132,21 @@ class __$$DiaryImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = null,
+    Object? userId = freezed,
     Object? title = null,
     Object? content = null,
     Object? mood = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$DiaryImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -159,10 +159,10 @@ class __$$DiaryImplCopyWithImpl<$Res>
           ? _value.mood
           : mood // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -172,11 +172,11 @@ class __$$DiaryImplCopyWithImpl<$Res>
 class _$DiaryImpl implements _Diary {
   const _$DiaryImpl(
       {@JsonKey(name: '_id') this.id,
-      required this.userId,
+      this.userId,
       required this.title,
       required this.content,
       required this.mood,
-      required this.createdAt});
+      this.createdAt});
 
   factory _$DiaryImpl.fromJson(Map<String, dynamic> json) =>
       _$$DiaryImplFromJson(json);
@@ -185,7 +185,7 @@ class _$DiaryImpl implements _Diary {
   @JsonKey(name: '_id')
   final String? id;
   @override
-  final String userId;
+  final String? userId;
   @override
   final String title;
   @override
@@ -193,7 +193,7 @@ class _$DiaryImpl implements _Diary {
   @override
   final String mood;
   @override
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   @override
   String toString() {
@@ -238,11 +238,11 @@ class _$DiaryImpl implements _Diary {
 abstract class _Diary implements Diary {
   const factory _Diary(
       {@JsonKey(name: '_id') final String? id,
-      required final String userId,
+      final String? userId,
       required final String title,
       required final String content,
       required final String mood,
-      required final DateTime createdAt}) = _$DiaryImpl;
+      final DateTime? createdAt}) = _$DiaryImpl;
 
   factory _Diary.fromJson(Map<String, dynamic> json) = _$DiaryImpl.fromJson;
 
@@ -250,7 +250,7 @@ abstract class _Diary implements Diary {
   @JsonKey(name: '_id')
   String? get id;
   @override
-  String get userId;
+  String? get userId;
   @override
   String get title;
   @override
@@ -258,7 +258,7 @@ abstract class _Diary implements Diary {
   @override
   String get mood;
   @override
-  DateTime get createdAt;
+  DateTime? get createdAt;
 
   /// Create a copy of Diary
   /// with the given fields replaced by the non-null parameter values.

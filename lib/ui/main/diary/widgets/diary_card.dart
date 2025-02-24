@@ -40,7 +40,7 @@ class DiaryCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  _formatDate(diary.createdAt),
+                  _formatDate(diary.createdAt ?? DateTime.now()),
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
                 const Spacer(),

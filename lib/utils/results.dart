@@ -1,3 +1,5 @@
+import 'package:graphql_flutter/graphql_flutter.dart';
+
 sealed class Result<T> {
   const Result();
 
@@ -25,6 +27,16 @@ final class Error<T> extends Result<T> {
 
   /// Returned error in result
   final Exception error;
+
+  String get errorMessage {
+    if (error is OperationException) {
+      final operationException = error as OperationException;
+      if (operationException.graphqlErrors.isNotEmpty) {
+        return operationException.graphqlErrors.first.message;
+      }
+    }
+    return error.toString(); // Fallback for non-GraphQL errors
+  }
 
   @override
   String toString() => 'Result<$T>.error($error)';

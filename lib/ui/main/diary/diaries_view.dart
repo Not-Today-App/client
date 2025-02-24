@@ -11,6 +11,16 @@ class DiariesView extends StatelessWidget {
 
   final DiariesViewModel viewModel;
 
+  bool _isLastDiaryLessThanADayAgo(List<Diary> diaries) {
+    if (diaries.isEmpty) return false;
+
+    final lastDiary = diaries.last;
+    final now = DateTime.now().toUtc();
+    final difference = now.difference(lastDiary.createdAt!);
+
+    return difference.inHours < 24;
+  }
+
   @override
   Widget build(BuildContext context) {
     final Diary skelData = Diary(
@@ -23,6 +33,7 @@ class DiariesView extends StatelessWidget {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text('Diaries'),
         actions: [
@@ -30,12 +41,25 @@ class DiariesView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.p16),
             child: IconButton.filledTonal(
               onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return const DiaryForm();
-                  },
-                );
+                if (_isLastDiaryLessThanADayAgo(viewModel.diaries)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('You already created a diary today'),
+                    ),
+                  );
+                } else {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: DiaryForm(viewModel: viewModel),
+                      );
+                    },
+                  );
+                }
               },
               icon: const Icon(Icons.add),
             ),
@@ -45,10 +69,10 @@ class DiariesView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(AppSizes.p16),
         child: ListenableBuilder(
-          listenable: viewModel,
+          listenable:
+              Listenable.merge([viewModel.loadDiaries, viewModel.createDiary]),
           builder: (context, _) {
-            // ERROR
-            if (viewModel.load.error) {
+            if (viewModel.loadDiaries.error) {
               return const Center(
                 child: Text(
                   'Failed to load diaries',
@@ -57,25 +81,23 @@ class DiariesView extends StatelessWidget {
               );
             }
 
-            // SUCCESS
-            if (viewModel.diaries.isEmpty && !viewModel.load.running) {
+            if (viewModel.diaries.isEmpty && !viewModel.loadDiaries.running) {
               return const Center(
                 child: Text('You have no diaries yet, create one!'),
               );
             }
 
             return Skeletonizer(
-              enabled: viewModel.load.running,
+              enabled: viewModel.loadDiaries.running,
               child: ListView.builder(
-                itemCount:
-                    viewModel.load.running ? 2 : viewModel.diaries.length,
+                itemCount: viewModel.loadDiaries.running
+                    ? 2
+                    : viewModel.diaries.length,
                 itemBuilder: (context, index) {
-                  final diary = viewModel.load.running
+                  final diary = viewModel.loadDiaries.running
                       ? skelData
                       : viewModel.diaries[index];
-                  return DiaryCard(
-                    diary: diary,
-                  );
+                  return DiaryCard(diary: diary);
                 },
               ),
             );

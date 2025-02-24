@@ -60,7 +60,6 @@ class ProfileView extends StatelessWidget {
                         ? skelData['imageUrl']!
                         : viewModel.user.picture,
                     onEdit: () {},
-                    showIcon: !viewModel.loadUser.running,
                   ),
                   const SizedBox(height: AppSizes.p16),
                   Text(
