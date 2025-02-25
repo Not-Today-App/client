@@ -7,12 +7,7 @@ import 'package:client/utils/results.dart';
 const String getAddictionsQuery = '''
 query Addictions {
   addictions {
-    _id
     name
-    quitReason
-    symptoms
-    treatmentOptions
-    triggers
   }
 }
 ''';

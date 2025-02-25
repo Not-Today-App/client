@@ -9,20 +9,17 @@ part of 'addiction.dart';
 _$AddictionImpl _$$AddictionImplFromJson(Map<String, dynamic> json) =>
     _$AddictionImpl(
       id: json['_id'] as String?,
-      name: json['name'] as String,
-      quitReason: json['quitReason'] as String,
+      name: json['name'] as String?,
+      quitReason: json['quitReason'] as String?,
       symptoms: (json['symptoms'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+          ?.map((e) => e as String)
+          .toList(),
       treatmentOptions: (json['treatmentOptions'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+          ?.map((e) => e as String)
+          .toList(),
       triggers: (json['triggers'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$AddictionImplToJson(_$AddictionImpl instance) =>

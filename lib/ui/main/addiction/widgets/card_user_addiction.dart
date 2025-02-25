@@ -2,6 +2,7 @@ import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CardUserAddiction extends StatelessWidget {
   const CardUserAddiction({super.key, required this.userAddiction});
@@ -19,7 +20,7 @@ class CardUserAddiction extends StatelessWidget {
           child: Row(
             children: [
               const CircleAvatar(
-                child: Icon(Icons.local_florist),
+                child: Skeleton.ignore(child: Icon(Icons.local_florist)),
               ),
               const SizedBox(width: 16),
               Column(

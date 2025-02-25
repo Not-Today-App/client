@@ -1,8 +1,9 @@
 import 'package:client/domain/models/diary/diary.dart';
 import 'package:client/ui/core/themes/sizes.dart';
+import 'package:client/ui/core/widgets/empty_state.dart';
 import 'package:client/ui/main/diary/diaries_view_model.dart';
 import 'package:client/ui/main/diary/widgets/diary_card.dart';
-import 'package:client/ui/main/diary/widgets/diary_form.dart';
+import 'package:client/ui/core/widgets/diary_form.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -82,8 +83,10 @@ class DiariesView extends StatelessWidget {
             }
 
             if (viewModel.diaries.isEmpty && !viewModel.loadDiaries.running) {
-              return const Center(
-                child: Text('You have no diaries yet, create one!'),
+              return EmptyState(
+                imagePath: 'assets/empty_state_illustration.png',
+                title: 'No Diaries',
+                description: 'Create a diary to show up here.',
               );
             }
 

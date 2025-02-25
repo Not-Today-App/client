@@ -1,5 +1,7 @@
+import 'package:client/domain/models/addiction/addiction.dart';
 import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/ui/core/themes/sizes.dart';
+import 'package:client/ui/core/widgets/empty_state.dart';
 import 'package:client/ui/main/addiction/addictions_view_model.dart';
 import 'package:client/ui/main/addiction/widgets/addiction_bottom_sheet.dart';
 import 'package:client/ui/main/addiction/widgets/card_user_addiction.dart';
@@ -51,8 +53,10 @@ class AddictionsView extends StatelessWidget {
             }
             // SUCCESS
             if (viewModel.userAddictions.isEmpty && !viewModel.load.running) {
-              return const Center(
-                child: Text('No addictions yet. Add one!'),
+              return EmptyState(
+                imagePath: 'assets/empty_state_illustration.png',
+                title: 'No Addictions',
+                description: 'Create an addiction to show up here.',
               );
             }
             return Skeletonizer(
@@ -81,14 +85,19 @@ class AddictionsView extends StatelessWidget {
   }
 
   void _openAddictionBottomSheet(BuildContext context) {
-    // Extract only the names from the addictions list
     final List<String> addictionNames =
-        viewModel.addictions.map((addiction) => addiction.name).toList();
+        viewModel.addictions.map((addiction) => addiction.name!).toList();
+
+    final List<String> userAddictionNames =
+        viewModel.userAddictions.map((ua) => ua.addiction).toList();
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => CreateAddictionSheet(options: addictionNames),
+      builder: (context) => CreateAddictionSheet(
+        options: addictionNames,
+        disabledOptions: userAddictionNames, // Pass already added addictions
+      ),
     );
   }
 }
