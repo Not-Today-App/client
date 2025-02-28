@@ -2,26 +2,10 @@
 
 import 'package:client/domain/models/diary/diary.dart';
 import 'package:client/ui/core/themes/sizes.dart';
+import 'package:client/ui/main/diary/diaries_view_model.dart';
+import 'package:client/utils/diary_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-enum Mood {
-  HAPPY,
-  RELAXED,
-  PROUD,
-  HOPEFUL,
-  NEUTRAL,
-  SAD,
-  ANXIOUS,
-  TIRED,
-  ANGRY,
-  OVERWHELMED,
-  CALM,
-  CONFUSED,
-  EXCITED,
-  GRATEFUL,
-  LONELY,
-}
 
 class DiaryForm extends StatefulWidget {
   const DiaryForm({
@@ -30,7 +14,7 @@ class DiaryForm extends StatefulWidget {
     this.diary,
   });
 
-  final dynamic viewModel; //DiaryViewModel or DiariesViewModel
+  final DiariesViewModel viewModel;
   final Diary? diary; // Diary to edit (null for create mode)
 
   @override

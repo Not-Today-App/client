@@ -6,6 +6,7 @@ part 'diary.g.dart';
 @freezed
 class Diary with _$Diary {
   const factory Diary({
+    // ignore: invalid_annotation_target
     @JsonKey(name: '_id') String? id,
     String? userId,
     required String title,

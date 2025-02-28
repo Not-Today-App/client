@@ -20,6 +20,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
+// ignore: duplicate_ignore
 // ignore: invalid_annotation_target
   @JsonKey(name: '_id')
   String get id => throw _privateConstructorUsedError;
@@ -167,6 +168,7 @@ class _$UserImpl implements _User {
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
 
+// ignore: duplicate_ignore
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')
@@ -230,6 +232,7 @@ abstract class _User implements User {
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
+// ignore: duplicate_ignore
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')

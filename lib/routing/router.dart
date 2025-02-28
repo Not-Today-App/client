@@ -7,7 +7,6 @@ import 'package:client/ui/main/addiction_single/addiction_view.dart';
 import 'package:client/ui/main/addiction_single/addiction_view_model.dart';
 import 'package:client/ui/main/diary/diaries_view_model.dart';
 import 'package:client/ui/main/diary_single/diary_view.dart';
-import 'package:client/ui/main/diary_single/diary_view_model.dart';
 import 'package:client/ui/main/profile/profile_view_model.dart';
 import 'package:client/ui/main/profile_settings/profile_settings_view.dart';
 import 'package:flutter/material.dart';
@@ -70,9 +69,7 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
             GoRoute(
               path: AppRoutes.diariesView,
               builder: (context, state) {
-                final viewModel =
-                    DiariesViewModel(diaryRepository: context.read());
-
+                final viewModel = context.read<DiariesViewModel>();
                 return DiariesView(viewModel: viewModel);
               },
               routes: [
@@ -80,8 +77,7 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
                   path: AppRoutes.diaryViewRelative,
                   builder: (context, state) {
                     final id = Uri.decodeComponent(state.pathParameters['id']!);
-                    final viewModel =
-                        DiaryViewModel(diaryRepository: context.read());
+                    final viewModel = context.read<DiariesViewModel>();
 
                     viewModel.loadDiary.execute(id);
 

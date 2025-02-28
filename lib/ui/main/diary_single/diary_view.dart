@@ -1,13 +1,16 @@
 import 'package:client/ui/core/themes/sizes.dart';
 import 'package:client/ui/core/widgets/diary_form.dart';
-import 'package:client/ui/main/diary_single/diary_view_model.dart';
+import 'package:client/ui/main/diary/diaries_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class DiaryView extends StatelessWidget {
-  const DiaryView({super.key, required this.viewModel});
+  const DiaryView({
+    super.key,
+    required this.viewModel,
+  });
 
-  final DiaryViewModel viewModel;
+  final DiariesViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class DiaryView extends StatelessWidget {
         title: ListenableBuilder(
           listenable: viewModel,
           builder: (context, _) {
-            return Text(viewModel.diary?.title ?? '');
+            return Text(viewModel.currentDiary?.title ?? '');
           },
         ),
         actions: [
@@ -56,7 +59,7 @@ class DiaryView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (viewModel.loadDiary.error || viewModel.diary == null) {
+          if (viewModel.loadDiary.error || viewModel.currentDiary == null) {
             return const Center(child: Text('Failed to load diary'));
           }
 
@@ -69,7 +72,7 @@ class DiaryView extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  viewModel.diary?.content ?? 'Write your diary here...',
+                  viewModel.currentDiary?.content ?? 'Write your diary here...',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
@@ -81,7 +84,7 @@ class DiaryView extends StatelessWidget {
   }
 
   void _editDiary(BuildContext context) {
-    final diary = viewModel.diary;
+    final diary = viewModel.currentDiary;
     if (diary == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Diary not found')),
@@ -93,16 +96,21 @@ class DiaryView extends StatelessWidget {
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return DiaryForm(
-          viewModel: viewModel,
-          diary: diary, // Pass the diary to edit
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: DiaryForm(
+            viewModel: viewModel,
+            diary: diary, // for auto-fill
+          ),
         );
       },
     );
   }
 
   void _deleteDiary(BuildContext context) async {
-    final diaryId = viewModel.diaryId;
+    final diaryId = viewModel.currentDiary?.id;
     if (diaryId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Diary ID is missing')),

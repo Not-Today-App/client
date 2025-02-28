@@ -1,4 +1,3 @@
-import 'package:client/domain/models/addiction/addiction.dart';
 import 'package:client/domain/models/userAddiction/user_addiction.dart';
 import 'package:client/ui/core/themes/sizes.dart';
 import 'package:client/ui/core/widgets/empty_state.dart';

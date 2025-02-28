@@ -4,18 +4,23 @@ import 'package:client/ui/core/widgets/empty_state.dart';
 import 'package:client/ui/main/diary/diaries_view_model.dart';
 import 'package:client/ui/main/diary/widgets/diary_card.dart';
 import 'package:client/ui/core/widgets/diary_form.dart';
+import 'package:client/utils/diary_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class DiariesView extends StatelessWidget {
-  const DiariesView({super.key, required this.viewModel});
+  DiariesView({super.key, required this.viewModel});
 
   final DiariesViewModel viewModel;
+
+  final log = Logger("card");
 
   bool _isLastDiaryLessThanADayAgo(List<Diary> diaries) {
     if (diaries.isEmpty) return false;
 
     final lastDiary = diaries.last;
+    log.info(lastDiary);
     final now = DateTime.now().toUtc();
     final difference = now.difference(lastDiary.createdAt!);
 
@@ -92,7 +97,7 @@ class DiariesView extends StatelessWidget {
 
             return Skeletonizer(
               enabled: viewModel.loadDiaries.running,
-              child: ListView.builder(
+              child: ListView.separated(
                 itemCount: viewModel.loadDiaries.running
                     ? 2
                     : viewModel.diaries.length,
@@ -100,7 +105,12 @@ class DiariesView extends StatelessWidget {
                   final diary = viewModel.loadDiaries.running
                       ? skelData
                       : viewModel.diaries[index];
-                  return DiaryCard(diary: diary);
+                  return DiaryCard(
+                    diary: diary,
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: AppSizes.p16);
                 },
               ),
             );

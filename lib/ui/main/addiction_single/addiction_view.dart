@@ -1,4 +1,5 @@
 import 'package:client/ui/core/themes/sizes.dart';
+import 'package:client/ui/core/widgets/addiction_circular_progress.dart';
 import 'package:client/ui/main/addiction_single/addiction_view_model.dart';
 import 'package:client/ui/main/addiction_single/widgets/info_list_card.dart';
 import 'package:client/ui/main/addiction_single/widgets/linear_percentage_indicator.dart';
@@ -53,25 +54,22 @@ class AddictionView extends StatelessWidget {
           final addiction = viewModel.addiction!;
 
           return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: AppSizes.p16,
-                    right: AppSizes.p16,
-                    top: AppSizes.p24,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSizes.p16,
+                vertical: AppSizes.p32,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AddictionCircularProgress(
+                    progress: 0.75,
+                    isLarge: true,
+                    level: 3,
                   ),
-                  child:
-                      LinearPercentageIndicator(currentValue: 8, goalValue: 14),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: AppSizes.p16,
-                    right: AppSizes.p16,
-                    bottom: AppSizes.p32,
-                  ),
-                  child: Column(
+                  const SizedBox(height: AppSizes.p48),
+                  LinearPercentageIndicator(currentValue: 8, goalValue: 14),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: AppSizes.p32),
@@ -113,8 +111,8 @@ class AddictionView extends StatelessWidget {
                       const SizedBox(height: AppSizes.p32),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

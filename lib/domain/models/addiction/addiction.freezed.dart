@@ -20,6 +20,7 @@ Addiction _$AddictionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Addiction {
+  // ignore: duplicate_ignore
 // ignore: invalid_annotation_target
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
@@ -186,7 +187,7 @@ class _$AddictionImpl implements _Addiction {
 
   factory _$AddictionImpl.fromJson(Map<String, dynamic> json) =>
       _$$AddictionImplFromJson(json);
-
+// ignore: duplicate_ignore
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')
@@ -284,7 +285,7 @@ abstract class _Addiction implements Addiction {
 
   factory _Addiction.fromJson(Map<String, dynamic> json) =
       _$AddictionImpl.fromJson;
-
+// ignore: duplicate_ignore
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')

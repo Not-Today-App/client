@@ -1,4 +1,6 @@
 import 'package:client/routing/routes.dart';
+import 'package:client/ui/core/widgets/badge.dart';
+import 'package:client/utils/diary_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -20,11 +22,11 @@ class DiaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(AppSizes.p16),
       onTap: () {
         context.go(AppRoutes.diaryWithId(diary.id!));
       },
       child: Card(
-        margin: const EdgeInsets.symmetric(vertical: AppSizes.p16),
         child: Padding(
           padding: const EdgeInsets.all(AppSizes.p16),
           child: Column(
@@ -50,6 +52,11 @@ class DiaryCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   const Spacer(),
+                  CustomBadge(
+                    label: diary.mood,
+                    color: DiaryUtils.getBadgeColor(
+                        context, DiaryUtils.getMoodFromString(diary.mood)),
+                  ),
                 ],
               ),
             ],
