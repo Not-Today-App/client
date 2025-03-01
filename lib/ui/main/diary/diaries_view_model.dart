@@ -65,11 +65,12 @@ class DiariesViewModel extends ChangeNotifier {
         _log.fine('Diary updated successfully');
         // Find and update the diary in the list
         int index = _diaries.indexWhere((diary) => diary.id == updatedDiary.id);
+        _currentDiary = updatedDiary;
         if (index != -1) {
           _diaries[index] = updatedDiary;
-          _currentDiary = updatedDiary;
-          notifyListeners();
         }
+        notifyListeners();
+
         return Result.ok(updatedDiary);
       case Error<Diary>():
         _log.warning('Failed to update diary. Error: ${result.error}');

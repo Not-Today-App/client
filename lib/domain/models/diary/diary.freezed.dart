@@ -20,6 +20,7 @@ Diary _$DiaryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Diary {
+// ignore: invalid_annotation_target
   @JsonKey(name: '_id')
   String? get id => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
@@ -181,6 +182,7 @@ class _$DiaryImpl implements _Diary {
   factory _$DiaryImpl.fromJson(Map<String, dynamic> json) =>
       _$$DiaryImplFromJson(json);
 
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')
   final String? id;
@@ -246,6 +248,7 @@ abstract class _Diary implements Diary {
 
   factory _Diary.fromJson(Map<String, dynamic> json) = _$DiaryImpl.fromJson;
 
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')
   String? get id;

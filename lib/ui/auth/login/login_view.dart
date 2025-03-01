@@ -1,5 +1,7 @@
 import 'package:client/ui/auth/login/login_view_model.dart';
 import 'package:client/ui/core/themes/sizes.dart';
+import 'package:client/ui/core/widgets/divider_text_center.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:client/routing/routes.dart';
@@ -82,13 +84,7 @@ class _LoginViewState extends State<LoginView> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: AppSizes.p48),
-                  Row(children: [
-                    Expanded(child: Divider()),
-                    SizedBox(width: AppSizes.p12),
-                    Text("Or login with"),
-                    SizedBox(width: AppSizes.p12),
-                    Expanded(child: Divider()),
-                  ]),
+                  const DividerTextCenter(text: "Or login with"),
                   // Login button
                   Spacer(),
                   Center(
@@ -111,6 +107,9 @@ class _LoginViewState extends State<LoginView> {
                                   .colorScheme
                                   .primary, // Optional: Customize color
                             ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => context.go(AppRoutes.registerView),
                           ),
                         ],
                       ),
@@ -127,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                             _password.value.text,
                           ));
                         },
-                        child: Text("login"),
+                        child: Text("Login"),
                       );
                     },
                   ),
@@ -155,7 +154,7 @@ class _LoginViewState extends State<LoginView> {
         SnackBar(
           content: Text("errorWhileLogin"),
           action: SnackBarAction(
-            label: "try again", //AppLocalization.of(context).tryAgain
+            label: "Try again", //AppLocalization.of(context).tryAgain
             onPressed: () => widget.viewModel.login.execute((
               _email.value.text,
               _password.value.text,

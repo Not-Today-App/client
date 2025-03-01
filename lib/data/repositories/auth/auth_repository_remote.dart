@@ -1,11 +1,18 @@
 import 'package:client/data/services/api/api_client.dart';
 import 'package:client/data/services/api/model/login_request/login_request.dart';
 import 'package:client/data/services/api/model/login_response/login_response.dart';
+import 'package:client/data/services/api/model/register_request/register_request.dart';
 import 'package:client/data/services/shared_preferences_service.dart';
 import 'package:client/utils/results.dart';
 import 'package:logging/logging.dart';
 import '../../services/api/auth_api_client.dart';
 import 'auth_repository.dart';
+
+const String registerMutation = '''
+mutation Mutation(\$input: RegisterInput!) {
+  register(input: \$input)
+}
+''';
 
 class AuthRepositoryRemote extends AuthRepository {
   AuthRepositoryRemote({
@@ -104,4 +111,32 @@ class AuthRepositoryRemote extends AuthRepository {
 
   String? _authHeaderProvider() =>
       _authToken != null ? 'Bearer $_authToken' : '';
+
+  @override
+  Future<Result<void>> register({
+    required String email,
+    required String password,
+    required String username,
+  }) async {
+    try {
+      final result = await _authApiClient.register(RegisterRequest(
+        email: email,
+        password: password,
+        username: username,
+      ));
+
+      if (result is Ok<String>) {
+        _log.info('Account registered: ${result.value}');
+        notifyListeners();
+        return Result.ok(null);
+      } else if (result is Error<String>) {
+        _log.warning('Error registering: ${result.error}');
+        return Result.error(result.error);
+      } else {
+        return Result.error(Exception("Unexpected result type"));
+      }
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
 }

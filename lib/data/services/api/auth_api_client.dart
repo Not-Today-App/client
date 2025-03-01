@@ -1,4 +1,5 @@
 import 'package:client/data/services/api/api_url.dart';
+import 'package:client/data/services/api/model/register_request/register_request.dart';
 import 'package:client/utils/results.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -45,6 +46,38 @@ class AuthApiClient {
       }
 
       return Result.ok(LoginResponse.fromJson(data));
+    } on Exception catch (error) {
+      return Result.error(error);
+    }
+  }
+
+  Future<Result<String>> register(RegisterRequest registerRequest) async {
+    const String registerMutation = '''
+      mutation Mutation(\$input: RegisterInput!) {
+        register(input: \$input)
+      }
+    ''';
+
+    final MutationOptions options = MutationOptions(
+      document: gql(registerMutation),
+      variables: {
+        'input': registerRequest.toJson(),
+      },
+    );
+
+    try {
+      final QueryResult result = await _client.mutate(options);
+
+      if (result.hasException) {
+        return Result.error(Exception(result.exception.toString()));
+      }
+
+      final data = result.data?['register'];
+      if (data == null) {
+        return Result.error(Exception("Invalid registration response"));
+      }
+
+      return Result.ok(data as String);
     } on Exception catch (error) {
       return Result.error(error);
     }

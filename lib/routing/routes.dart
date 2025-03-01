@@ -2,6 +2,7 @@ abstract final class AppRoutes {
   // Base paths
   static const menuView = '/';
   static const loginView = '/login';
+  static const registerView = '/register';
   static const addictionsView = '/addictions';
   static const diariesView = '/diaries';
   static const profileView = '/profile';

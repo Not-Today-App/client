@@ -20,10 +20,10 @@ UserAddiction _$UserAddictionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserAddiction {
-// ignore: duplicate_ignore
 // ignore: invalid_annotation_target
   @JsonKey(name: '_id')
-  String get id => throw _privateConstructorUsedError;
+  String get id =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'userId')
   String get userId => throw _privateConstructorUsedError;
   String get addiction => throw _privateConstructorUsedError;
@@ -187,11 +187,12 @@ class _$UserAddictionImpl implements _UserAddiction {
 
   factory _$UserAddictionImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserAddictionImplFromJson(json);
-// ignore: duplicate_ignore
+
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')
   final String id;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'userId')
   final String userId;
@@ -270,11 +271,11 @@ abstract class _UserAddiction implements UserAddiction {
 
   factory _UserAddiction.fromJson(Map<String, dynamic> json) =
       _$UserAddictionImpl.fromJson;
-// ignore: duplicate_ignore
+
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: '_id')
-  String get id;
+  String get id; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'userId')
   String get userId;

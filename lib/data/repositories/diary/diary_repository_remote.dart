@@ -30,6 +30,7 @@ mutation UpdateDiary(\$input: UpdateDiaryInput!) {
     title
     content
     mood
+    createdAt
   }
 }
 ''';

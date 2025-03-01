@@ -3,6 +3,8 @@ import 'package:client/data/repositories/auth/auth_repository.dart';
 import 'package:client/domain/models/user/user.dart';
 import 'package:client/ui/auth/login/login_view.dart';
 import 'package:client/ui/auth/login/login_view_model.dart';
+import 'package:client/ui/auth/register/register_view.dart';
+import 'package:client/ui/auth/register/register_view_model.dart';
 import 'package:client/ui/main/addiction_single/addiction_view.dart';
 import 'package:client/ui/main/addiction_single/addiction_view_model.dart';
 import 'package:client/ui/main/diary/diaries_view_model.dart';
@@ -30,6 +32,14 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
           builder: (context, state) {
             return LoginView(
               viewModel: LoginViewModel(authRepository: context.read()),
+            );
+          },
+        ),
+        GoRoute(
+          path: AppRoutes.registerView,
+          builder: (context, state) {
+            return RegisterView(
+              viewModel: RegisterViewModel(authRepository: context.read()),
             );
           },
         ),
@@ -113,16 +123,17 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
 
 // From https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/redirection.dart
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
+  final isRegisterRoute = state.matchedLocation == AppRoutes.registerView;
+
   // if the user is not logged in, they need to login
   final loggedIn = await context.read<AuthRepository>().isAuthenticated;
-  final loggingIn = state.matchedLocation == AppRoutes.loginView;
-  if (!loggedIn) {
+  if (!loggedIn && !isRegisterRoute) {
     return AppRoutes.loginView;
   }
 
-  // if the user is logged in but still on the login page, send them to
-  // the home page
-  if (loggingIn) {
+  // if the user is logged in but still on the login page, send them to the home page
+  final loggingIn = state.matchedLocation == AppRoutes.loginView;
+  if (loggedIn && loggingIn) {
     return AppRoutes.addictionsView;
   }
 
